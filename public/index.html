@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#0f2a44" />
+    <meta name="theme-color" content="#0f2742" />
     <title>FH&amp;L AI Assistant | Florida Homes &amp; Loans</title>
     <meta
       name="description"
@@ -17,14 +17,13 @@
     />
     <style>
       :root {
-        --navy: #0f2a44;
-        --navy-soft: #1d3d5c;
-        --sand: #f6f2ea;
-        --surface: #ffffff;
-        --teal: #1b7f7a;
-        --text: #16212c;
-        --muted: #5b6774;
-        --border: #e4ddd0;
+        --navy: #0f2742;
+        --blue: #1b5e9e;
+        --text: #374151;
+        --muted: #6b7280;
+        --line: #e6e8ee;
+        --soft: #f7f8fb;
+        --white: #ffffff;
         --radius: 16px;
       }
 
@@ -42,7 +41,7 @@
 
       body {
         font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-        background: var(--sand);
+        background: var(--soft);
         color: var(--text);
         line-height: 1.5;
         -webkit-font-smoothing: antialiased;
@@ -86,7 +85,7 @@
         width: 40px;
         height: 40px;
         border-radius: 12px;
-        background: var(--teal);
+        background: var(--blue);
         font-family: "Fraunces", Georgia, serif;
         font-size: 15px;
         font-weight: 600;
@@ -155,8 +154,8 @@
         font-size: 13px;
         font-weight: 500;
         color: var(--navy);
-        background: var(--surface);
-        border: 1px solid var(--border);
+        background: var(--white);
+        border: 1px solid var(--line);
         border-radius: 999px;
         padding: 8px 14px;
         cursor: pointer;
@@ -165,8 +164,8 @@
       }
 
       .suggestion:hover {
-        border-color: var(--teal);
-        background: #eef7f6;
+        border-color: var(--blue);
+        background: #eef4fb;
       }
 
       .message {
@@ -187,8 +186,8 @@
 
       .message.assistant {
         align-self: flex-start;
-        background: var(--surface);
-        border: 1px solid var(--border);
+        background: var(--white);
+        border: 1px solid var(--line);
         border-bottom-left-radius: 4px;
       }
 
@@ -248,24 +247,24 @@
       .composer-wrap {
         padding: 12px 16px;
         padding-bottom: max(12px, env(safe-area-inset-bottom));
-        background: var(--sand);
-        border-top: 1px solid var(--border);
+        background: var(--soft);
+        border-top: 1px solid var(--line);
       }
 
       .composer {
         display: flex;
         align-items: flex-end;
         gap: 8px;
-        background: var(--surface);
-        border: 1px solid var(--border);
+        background: var(--white);
+        border: 1px solid var(--line);
         border-radius: var(--radius);
         padding: 6px 6px 6px 14px;
         transition: border-color 0.15s, box-shadow 0.15s;
       }
 
       .composer:focus-within {
-        border-color: var(--teal);
-        box-shadow: 0 0 0 3px rgba(27, 127, 122, 0.15);
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px rgba(27, 94, 158, 0.15);
       }
 
       .composer textarea {
@@ -284,7 +283,7 @@
       }
 
       .composer textarea::placeholder {
-        color: #8a95a1;
+        color: #9ca3af;
       }
 
       .send {
@@ -295,14 +294,14 @@
         height: 40px;
         border: 0;
         border-radius: 12px;
-        background: var(--teal);
+        background: var(--blue);
         color: #fff;
         cursor: pointer;
         transition: background-color 0.15s, opacity 0.15s;
       }
 
       .send:hover:not(:disabled) {
-        background: #156964;
+        background: #164d82;
       }
 
       .send:disabled {
@@ -312,7 +311,7 @@
 
       .send:focus-visible,
       .suggestion:focus-visible {
-        outline: 2px solid var(--teal);
+        outline: 2px solid var(--blue);
         outline-offset: 2px;
       }
 
