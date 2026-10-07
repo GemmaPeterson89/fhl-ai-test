@@ -1,8 +1,16 @@
 import OpenAI from "openai";
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+let client;
+
+function getClient() {
+  if (!client) {
+    client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  }
+  return client;
+}
+
+const MAX_MESSAGE_LENGTH = 2000;
+const MAX_HISTORY_TURNS = 12;
 
 const FHL_INSTRUCTIONS = `
 You are the public-facing AI assistant for Florida Homes & Loans and FHL Mortgages.
@@ -69,16 +77,44 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { message } = req.body || {};
+    const { message, history } = req.body || {};
 
-    if (!message) {
+    if (typeof message !== "string" || !message.trim()) {
       return res.status(400).json({ error: "Message is required" });
     }
 
-    const response = await client.responses.create({
+    if (message.length > MAX_MESSAGE_LENGTH) {
+      return res.status(400).json({ error: "Message is too long" });
+    }
+
+    const priorTurns = Array.isArray(history)
+      ? history
+          .filter(
+            (turn) =>
+              turn &&
+              (turn.role === "user" || turn.role === "assistant") &&
+              typeof turn.content === "string" &&
+              turn.content.trim()
+          )
+          .slice(-MAX_HISTORY_TURNS)
+          .map((turn) => ({
+            role: turn.role,
+            content: turn.content.slice(0, MAX_MESSAGE_LENGTH),
+          }))
+      : [];
+
+    if (!process.env.OPENAI_API_KEY) {
+      console.error("OPENAI_API_KEY is not set");
+      return res.status(500).json({ error: "The FH&L assistant is not configured yet." });
+    }
+
+    const response = await getClient().responses.create({
       model: "gpt-5.6-luna",
       instructions: FHL_INSTRUCTIONS,
-      input: message,
+      input:
+        priorTurns.length > 0
+          ? [...priorTurns, { role: "user", content: message.trim() }]
+          : message.trim(),
     });
 
     return res.status(200).json({
